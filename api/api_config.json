@@ -5,5 +5,6 @@
     "MAIL_PASSWORD": "eric",
     "SMS_USERNAME": "eric",
     "SMS_KEY": "eric",
-    "SQLALCHEMY_DATABASE_URI": "mysql+pymysql://root@localhost/safe_courier"
+    "SQLALCHEMY_DATABASE_URI": "mysql+pymysql:////b8891f09991564:1fded37c@us-cdbr-east-05.cleardb.net/heroku_83d94963ab817aa?reconnect=true"
 }
+

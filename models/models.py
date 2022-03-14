@@ -105,6 +105,12 @@ class Parcel(db.Model):
     def update(cls):
         db.session.commit()
 
+    @classmethod
+    def delete_from_db(cls, id):
+        parcel = cls.query.filter_by(id=id).first()
+        db.session.delete(parcel)
+        db.session.commit()
+
 
 class RevokedToken(db.Model):
     __tablename__ = 'revoked_tokens'

@@ -36,6 +36,7 @@ class RegisterUser(Resource):
             address=data['address'],
             phone=data['phone'],
             password=User.generate_hash(data['password']),
+            role_id=2,
             created_by=get_jwt_claims()['id']
         )
 
@@ -92,7 +93,7 @@ class UserLogin(Resource):
                 'user': {
                     'id': current_user.id,
                     'email': current_user.email,
-                    'role': current_user.role
+                    'role': current_user.role_id
                 }
             }, 200
         return {'message': 'Invalid credentials'}, 401

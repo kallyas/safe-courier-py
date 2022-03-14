@@ -28,7 +28,7 @@ cors = CORS()
 
 logging.basicConfig(filename='app.log', level=logging.DEBUG, format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
 
-def create_app(config_name='testing'):
+def create_app(config_name='production'):
     app = Flask(__name__)
     app.config.from_object(env_config[config_name])
     db.init_app(app)
@@ -37,6 +37,7 @@ def create_app(config_name='testing'):
     api.init_app(app)
     jwt.init_app(app)
     cors.init_app(app)
+    api.prefix = '/api/v1'
     
     from .errors.handlers import errors
     app.register_blueprint(errors)
@@ -61,8 +62,10 @@ def create_app(config_name='testing'):
         return user.id
 
     from .auth import auth_routes
+    from .parcels import parcel_routes
 
     auth_routes(api)
+    parcel_routes(api)
 
         
     return app
