@@ -1,22 +1,32 @@
 from datetime import timedelta
 
+from json import dumps
+
 
 from models import Parcel
 from flask_restful import Resource, reqparse
-from flask_jwt_extended import ( jwt_required, get_jwt_claims )
+from flask_jwt_extended import (jwt_required, get_jwt_claims)
 
 
 class Parcels(Resource):
     def __init__(self):
         self.parser = reqparse.RequestParser()
-        self.parser.add_argument('name', type=str, help='This field is required', required=True)
-        self.parser.add_argument('weight', type=float, help='This field is required', required=True)
-        self.parser.add_argument('price', type=float, help='This field is required', required=True)
-        self.parser.add_argument('destination', type=str, help='This field is required', required=True)
-        self.parser.add_argument('current_location', type=str, help='This field is required', required=True)
-        self.parser.add_argument('status', type=str, help='This field is required', required=True)
-
-    
+        self.parser.add_argument(
+            'name', type=str, help='This field is required', required=True)
+        self.parser.add_argument('weight', type=float,
+                                 help='This field is required', required=True)
+        self.parser.add_argument(
+            'price', type=float, help='This field is required', required=True)
+        self.parser.add_argument(
+            'destination', type=str, help='This field is required', required=True)
+        self.parser.add_argument(
+            'current_location', type=str, help='This field is required', required=True)
+        self.parser.add_argument(
+            'status', type=str, help='This field is required', required=True)
+        self.parser.add_argument(
+            'description', type=str, help='This field is required', required=True)
+        self.parser.add_argument(
+            'location', type=str, help='This field is required', required=True)
 
     @jwt_required
     def post(self):
@@ -25,17 +35,23 @@ class Parcels(Resource):
             name=data['name'],
             weight=data['weight'],
             price=data['price'],
+            description=data['description'],
+            location=data['location'],
             destination=data['destination'],
             current_location=data['current_location'],
             status=data['status'],
             user_id=get_jwt_claims()['id']
         )
         parcel.save_to_db()
-        return parcel.json(), 201
+        return {'message': 'Parcel created successfully'}, 201
 
     @jwt_required
     def get(self):
-        return {'parcels': [parcel.json() for parcel in Parcel.query.all()]}
+        parcels = Parcel.query.all()
+        return {
+            'count': Parcel.count_all(),
+            'parcels': [parcel.json() for parcel in parcels]
+        }
 
     @jwt_required
     # user can only update their own parcels for the following fields:

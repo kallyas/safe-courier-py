@@ -23,7 +23,7 @@ class RegisterUser(Resource):
     def post(self):
         data = self.parser.parse_args()
 
-        current_user = User.find_by_email(data['email']).first()
+        current_user = User.find_by_email(data['email'])
 
         if current_user['email'] == data['email'] and current_user['username'] == data['username']:
             return {'message': 'User already exists'}, 400
@@ -77,23 +77,27 @@ class UserLogin(Resource):
 
         data = parser.parse_args()
 
-        current_user = User.find_by_email(data['email']).first()
+        current_user = User.find_by_email(data['email'])
 
         if not current_user:
             return {'message': 'User by {} not found'.format(data['email'])}, 404
 
         if User.verify_hash(data['password'], current_user.password):
             expires = timedelta(days=1)
+            identity = {
+                'id': current_user.id,
+                'role': current_user.role_id
+            }
             access_token = create_access_token(
-                identity=current_user, expires_delta=expires)
-            refresh_token = create_refresh_token(identity=current_user)
+                identity=identity, expires_delta=expires)
+            refresh_token = create_refresh_token(identity=identity)
             return {
                 'access_token': access_token,
                 'refresh_token': refresh_token,
                 'user': {
                     'id': current_user.id,
                     'email': current_user.email,
-                    'role': current_user.role_id
+                    'role': current_user.role_id,
                 }
             }, 200
         return {'message': 'Invalid credentials'}, 401
@@ -113,9 +117,10 @@ class LogoutAccess(Resource):
     @jwt_required
     def post(self):
         jti = get_raw_jwt()['jti']
+        print(jti)
         try:
             revoked_token = RevokedToken(jti=jti)
-            revoked_token.add()
+            revoked_token.save_to_db()
             return {'message': 'Successfully logged out'}, 200
         except:
             return {'message': 'Something went wrong'}, 500

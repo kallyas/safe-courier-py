@@ -37,7 +37,6 @@ def create_app(config_name='production'):
     api.init_app(app)
     jwt.init_app(app)
     cors.init_app(app)
-    api.prefix = '/api/v1'
     
     from .errors.handlers import errors
     app.register_blueprint(errors)
@@ -52,20 +51,16 @@ def create_app(config_name='production'):
     
     @jwt.user_claims_loader
     def add_claims_to_access_token(identity):
-        return {
-            'id': identity.id,
-            'role': identity.role
-        }
+        return identity
 
     @jwt.user_identity_loader
     def user_identity_lookup(user):
-        return user.id
-
-    from .auth import auth_routes
-    from .parcels import parcel_routes
-
-    auth_routes(api)
-    parcel_routes(api)
-
+        return user
         
     return app
+
+from .auth import auth_routes
+from .parcels import parcel_routes
+
+auth_routes(api)
+parcel_routes(api)

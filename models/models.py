@@ -22,7 +22,7 @@ class Role(db.Model):
     __tablename__ = 'roles'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
-    users = db.relationship('User', backref='role')
+    users = db.relationship('User', backref='user_role')
 
 
 @db.event.listens_for(Role.__table__, 'after_create')
@@ -48,8 +48,10 @@ class User(db.Model):
     # Role is a foreign key from Roles table
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'), nullable=False)
     # Role is a relationship from Roles table
-    role = db.relationship('Role', backref=db.backref('users', lazy=True))
+    role = db.relationship('Role', backref=db.backref('user_role', lazy=True))
 
+    def __repr__(self):
+        return '<User {}>'.format(self.username)
 
     def save_to_db(self):
         db.session.add(self)
@@ -100,6 +102,10 @@ class Parcel(db.Model):
     def save_to_db(self):
         db.session.add(self)
         db.session.commit()
+
+    @classmethod
+    def count_all(self):
+        return Parcel.query.count()
 
     @classmethod
     def update(cls):
