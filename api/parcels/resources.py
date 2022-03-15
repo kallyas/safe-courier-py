@@ -1,11 +1,13 @@
 from datetime import timedelta
 
-from json import dumps
-
-
+from flask import jsonify
 from models import Parcel
 from flask_restful import Resource, reqparse
 from flask_jwt_extended import (jwt_required, get_jwt_claims)
+from api.utils.schemas import ParcelSchema
+
+parcel_schema = ParcelSchema()
+parcels_schema = ParcelSchema(many=True)
 
 
 class Parcels(Resource):
@@ -46,12 +48,18 @@ class Parcels(Resource):
         return {'message': 'Parcel created successfully'}, 201
 
     @jwt_required
-    def get(self):
-        parcels = Parcel.query.all()
-        return {
-            'count': Parcel.count_all(),
-            'parcels': [parcel.json() for parcel in parcels]
-        }
+    def get(self, parcel_id=None):
+        if parcel_id:
+            parcel = Parcel.query.filter_by(id=parcel_id).first()
+            if parcel:
+                return parcel_schema.dump(parcel)
+            return {'message': 'Parcel not found'}, 404
+        else:
+            parcels = Parcel.query.all()
+            return {
+                'count': Parcel.count_all(),
+                'parcels': parcels_schema.dump(parcels)
+            }
 
     @jwt_required
     # user can only update their own parcels for the following fields:
@@ -70,11 +78,9 @@ class Parcels(Resource):
         return parcel.json()
 
     @jwt_required
-    def delete(self):
-        data = self.parser.parse_args()
-        parcel = Parcel.query.filter_by(id=data['id']).first()
-
+    def delete(self, parcel_id):
+        parcel = Parcel.query.filter_by(id=parcel_id).first()
         if not parcel:
             return {'message': 'Parcel not found'}, 404
-        parcel.delete_from_db()
+        parcel.delete_from_db(parcel_id)
         return {'message': 'Parcel deleted'}

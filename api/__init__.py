@@ -26,7 +26,9 @@ api = Api()
 jwt = JWTManager()
 cors = CORS()
 
-logging.basicConfig(filename='app.log', level=logging.DEBUG, format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
+# enable logging only if environment is testing or development
+if env_config['testing'] or env_config['development']:
+    logging.basicConfig(filename='app.log', level=logging.DEBUG, format='%(asctime)s  %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
 
 def create_app(config_name='production'):
     app = Flask(__name__)
@@ -61,6 +63,8 @@ def create_app(config_name='production'):
 
 from .auth import auth_routes
 from .parcels import parcel_routes
+from .users import users_route
 
 auth_routes(api)
 parcel_routes(api)
+users_route(api)
