@@ -1,4 +1,4 @@
 from .resources import Parcels
 
 def parcel_routes(api):
-    api.add_resource(Parcels, '/parcels/create', '/parcels/<int:parcel_id>', '/parcels')
+    api.add_resource(Parcels, '/api/v1/parcels/create', '/api/v1/parcels/<int:parcel_id>', '/api/v1/parcels')

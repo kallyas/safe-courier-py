@@ -34,7 +34,7 @@ class RegisterUser(Resource):
             first_name=data['first_name'],
             last_name=data['last_name'],
             address=data['address'],
-            phone=data['phone'],
+            phone_number=data['phone'],
             password=User.generate_hash(data['password']),
             role_id=2,
             created_by=get_jwt_claims()['id']

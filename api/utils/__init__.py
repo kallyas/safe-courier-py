@@ -1,1 +1,1 @@
-from .schemas import UserSchema
+from .schemas import UserSchema, ParcelSchema

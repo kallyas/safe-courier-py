@@ -64,7 +64,9 @@ def create_app(config_name='production'):
 from .auth import auth_routes
 from .parcels import parcel_routes
 from .users import users_route
+from .admin import admin_routes
 
 auth_routes(api)
 parcel_routes(api)
 users_route(api)
+admin_routes(api)

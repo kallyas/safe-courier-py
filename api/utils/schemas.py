@@ -13,6 +13,6 @@ class UserSchema(ModelSchema):
 
 class ParcelSchema(ModelSchema):
     class Meta:
-        fields = ('id', 'user_id', 'name', 'description', 'weight', 'price', 'status', 'location', 'destination', 'created_at', 'updated_at')
+        fields = ('id', 'user_id', 'name', 'description', 'weight', 'price', 'status', 'location', 'destination', 'created_at', 'updated_at', 'current_location')
         model = Parcel
 
