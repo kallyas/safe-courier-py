@@ -1,5 +1,8 @@
 import os
 import json
+from dotenv import load_dotenv
+
+load_dotenv()
 
 configPath = os.path.join(os.path.dirname(__file__), 'api_config.json')
 
@@ -38,7 +41,7 @@ class DevelopmentConfig(LocalConfig):
     """Development configuration."""
     DEBUG = True
     WTF_CSRF_ENABLED = False
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root@localhost/flask_api'
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
     DEBUG_TB_ENABLED = True
 
 
@@ -48,7 +51,7 @@ class TestingConfig(LocalConfig):
     TESTING = True
     BCRYPT_LOG_ROUNDS = 13
     WTF_CSRF_ENABLED = False
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root@localhost/safe_courier_test'
+    SQLALCHEMY_DATABASE_URI = os.getenv('TEST_DATABASE_URL')
     DEBUG_TB_ENABLED = False
 
 
@@ -60,7 +63,7 @@ class ProductionConfig(BaseConfig):
     MAIL_PASSWORD = config.get('MAIL_PASSWORD')
     SMS_USERNAME = config.get('SMS_USERNAME')
     SMS_KEY = config.get('SMS_KEY')
-    SQLALCHEMY_DATABASE_URI = config.get('SQLALCHEMY_DATABASE_URI')
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
     DEBUG = False
     DEBUG_TB_ENABLED = False
     PROPAGATE_EXCEPTIONS = True
