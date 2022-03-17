@@ -41,3 +41,15 @@ class AdminResource(Resource):
             Parcel.delete_from_db(id=parcel_id)
             return {'message': 'Parcel deleted'}, 200
         return {'message': 'Parcel not found'}, 404
+
+
+class GeneralInfo(Resource):
+    def get(self):
+        return {
+            'name': 'Safe-Courier API',
+            'version': '1.3',
+            'description': 'Safe-Courier API is a RESTful API that allows you to create, view, update, and delete parcels.',
+            'author': '<kallyas@gmail.com>',
+            'github': 'https://github.com/kallyas/safe-courier-py',
+            'docs': 'http://api-v3.safe-courier.ml/docs'
+        }, 200

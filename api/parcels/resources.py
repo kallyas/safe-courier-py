@@ -48,12 +48,17 @@ class Parcels(Resource):
         return {'message': 'Parcel created successfully'}, 201
 
     @jwt_required
-    def get(self, parcel_id=None):
+    def get(self, parcel_id=None, user_id=None):
         if parcel_id:
             parcel = Parcel.query.filter_by(id=parcel_id).first()
             if parcel:
                 return parcel_schema.dump(parcel)
             return {'message': 'Parcel not found'}, 404
+        elif user_id:
+            parcels = Parcel.query.filter_by(user_id=user_id).all()
+            if parcels:
+                return parcels_schema.dump(parcels)
+            return {'message': 'Parcels by user not found'}, 404
         else:
             parcels = Parcel.query.all()
             return {

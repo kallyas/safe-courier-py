@@ -7,7 +7,11 @@ from flask_marshmallow import Marshmallow
 from .config import env_config
 from flask_migrate import Migrate
 from flask_cors import CORS
+from dotenv import load_dotenv
 import logging
+import os
+
+load_dotenv()
 
 convention = {
     "ix": 'ix_%(column_0_label)s',
@@ -30,7 +34,7 @@ cors = CORS()
 if env_config['testing'] or env_config['development']:
     logging.basicConfig(filename='app.log', level=logging.DEBUG, format='%(asctime)s  %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
 
-def create_app(config_name='production'):
+def create_app(config_name=os.getenv('FLASK_ENV')):
     app = Flask(__name__)
     app.config.from_object(env_config[config_name])
     db.init_app(app)

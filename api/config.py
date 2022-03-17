@@ -38,7 +38,7 @@ class DevelopmentConfig(LocalConfig):
     """Development configuration."""
     DEBUG = True
     WTF_CSRF_ENABLED = False
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'safe_courier.sqlite')
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root@localhost/flask_api'
     DEBUG_TB_ENABLED = True
 
 

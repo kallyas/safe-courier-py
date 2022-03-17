@@ -25,7 +25,7 @@ class RegisterUser(Resource):
 
         current_user = User.find_by_email(data['email'])
 
-        if current_user['email'] == data['email'] and current_user['username'] == data['username']:
+        if current_user and current_user['email'] == data['email'] and current_user['username'] == data['username']:
             return {'message': 'User already exists'}, 400
 
         new_user = User(
@@ -36,8 +36,7 @@ class RegisterUser(Resource):
             address=data['address'],
             phone_number=data['phone'],
             password=User.generate_hash(data['password']),
-            role_id=2,
-            created_by=get_jwt_claims()['id']
+            role_id=2
         )
 
         new_user.save_to_db()
