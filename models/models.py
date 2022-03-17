@@ -85,7 +85,11 @@ def insert_admin(target, connection, **kw):
         {'id': 1, 'username': 'admin', 'email': 'admin@safe-courier.ml',
             'password': User.generate_hash('admin'), 'first_name': 'Admin',
             'last_name': 'Admin', 'address': 'Admin', 'phone_number': 'Admin',
-            'role_id': 1}
+            'role_id': 1},
+        {'id': 2, 'username': 'user', 'email': 'user@safe-courier.ml',
+            'password': User.generate_hash('user'), 'first_name': 'User',
+            'last_name': 'User', 'address': 'User', 'phone_number': 'User',
+            'role_id': 2},
     ])
 
 
