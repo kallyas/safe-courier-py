@@ -32,7 +32,7 @@ jobs:
     - name: Test with unittest
       env:
         FLASK_ENV: 'testing'
-        TEST_DATABASE_URL: 'mysql+pymysql://bbd6ec12349acc:8ab07a14@us-cdbr-east-05.cleardb.net/heroku_d51135d67af1eab?reconnect=true'
+        TEST_DATABASE_URL: 'mysql+pymysql://bbd6ec12349acc:8ab07a14@us-cdbr-east-05.cleardb.net/heroku_d51135d67af1eab'
         
       run: |
         echo env.TEST_DATABASE_URL
