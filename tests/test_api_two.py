@@ -1,8 +1,5 @@
 from tests.BaseCase import BaseCase
 import json
-from app import app
-import os
-
 
 user = {
     'username': 'test',

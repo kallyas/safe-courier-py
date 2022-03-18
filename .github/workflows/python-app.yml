@@ -55,7 +55,7 @@ jobs:
     - name: Test with pytest
       env:
         FLASK_ENV: 'testing'
-        TEST_DATABASE_URL: 'mysql+pymysql://user:password@localhost:3306/test'
+        TEST_DATABASE_URL: 'mysql+pymysql://root:password@localhost:3306/test'
         
       run: |
         python -m unittest discover
