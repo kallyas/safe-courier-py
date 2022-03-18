@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
 configPath = os.path.join(os.path.dirname(__file__), 'api_config.json')
 
 with open(configPath) as config_file:

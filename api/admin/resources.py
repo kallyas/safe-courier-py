@@ -35,12 +35,21 @@ class AdminResource(Resource):
     def delete(self, parcel_id):
         if not get_jwt_claims()['role'] == 1:
             return {'message': 'Admin access only'}, 403
-        data = self.parser.parse_args()
+            
         parcel = Parcel.query.filter_by(id=parcel_id).first()
         if parcel:
             Parcel.delete_from_db(id=parcel_id)
             return {'message': 'Parcel deleted'}, 200
         return {'message': 'Parcel not found'}, 404
+
+    @jwt_required
+    def get(self):
+        if not get_jwt_claims()['role'] == 1:
+            return {'message': 'Admin access only'}, 403
+
+        parcels = Parcel.query.all()
+        return parcels_schema.dump(parcels), 200
+
 
 
 class GeneralInfo(Resource):

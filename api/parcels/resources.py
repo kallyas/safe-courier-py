@@ -60,9 +60,9 @@ class Parcels(Resource):
                 return parcels_schema.dump(parcels)
             return {'message': 'Parcels by user not found'}, 404
         else:
-            parcels = Parcel.query.all()
+            parcels = Parcel.query.filter_by(user_id=get_jwt_claims()['id']).all()
             return {
-                'count': Parcel.count_all(),
+                'count': len(parcels),
                 'parcels': parcels_schema.dump(parcels)
             }
 

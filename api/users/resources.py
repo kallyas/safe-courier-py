@@ -16,7 +16,6 @@ class Users(Resource):
     def get(self, id=None):
         if id:
             user = User.query.filter_by(id=id).first()
-            print(user)
             if not user:
                 return {"message": "User not found"}, 404
             return user_schema.dump(user), 200
