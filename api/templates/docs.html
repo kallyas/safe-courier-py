@@ -1,0 +1,174 @@
+<!--
+ API Documentation HTML Template  - 1.0.1
+ Copyright © 2016 Florian Nicolas
+ Licensed under the MIT license.
+ https://github.com/ticlekiwi/API-Documentation-HTML-Template
+ !-->
+ <!DOCTYPE html>
+ <html class="no-js" lang="en">
+ <head>
+     <meta charset="utf-8">
+     <title>API - Documentation</title>
+     <meta name="description" content="">
+     <meta name="author" content="ticlekiwi">
+ 
+     <meta http-equiv="cleartype" content="on">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+     <link rel="stylesheet" href="https://ticlekiwi.github.io/API-Documentation-HTML-Template/css/hightlightjs-dark.css">
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;1,300&family=Source+Code+Pro:wght@300&display=swap" rel="stylesheet"> 
+     <link rel="stylesheet" href="https://ticlekiwi.github.io/API-Documentation-HTML-Template/css/style.css" media="all">
+     <script>hljs.initHighlightingOnLoad();</script>
+ </head>
+ 
+ <body>
+ <div class="left-menu">
+     <div class="content-logo">
+         <div class="logo">
+             <img alt="API Documentation" title="API Documentation" src="https://ticlekiwi.github.io/API-Documentation-HTML-Template/images/logo.png" height="32" />
+             <span>API Documentation</span>
+         </div>
+         <button class="burger-menu-icon" id="button-menu-mobile">
+             <svg width="34" height="34" viewBox="0 0 100 100"><path class="line line1" d="M 20,29.000046 H 80.000231 C 80.000231,29.000046 94.498839,28.817352 94.532987,66.711331 94.543142,77.980673 90.966081,81.670246 85.259173,81.668997 79.552261,81.667751 75.000211,74.999942 75.000211,74.999942 L 25.000021,25.000058"></path><path class="line line2" d="M 20,50 H 80"></path><path class="line line3" d="M 20,70.999954 H 80.000231 C 80.000231,70.999954 94.498839,71.182648 94.532987,33.288669 94.543142,22.019327 90.966081,18.329754 85.259173,18.331003 79.552261,18.332249 75.000211,25.000058 75.000211,25.000058 L 25.000021,74.999942"></path></svg>
+         </button>
+     </div>
+     <div class="mobile-menu-closer"></div>
+     <div class="content-menu">
+         <div class="content-infos">
+             <div class="info"><b>Version:</b> 1.3</div>
+             <div class="info"><b>Last Updated:</b> 19<sup>th</sup> March 2022</div>
+         </div>
+         <ul>
+             <li class="scroll-to-link active" data-target="content-get-started">
+                 <a>GET STARTED</a>
+             </li>
+             <li class="scroll-to-link" data-target="authentication">
+                 <a>Authentication</a>
+             </li>
+                <li class="scroll-to-link" data-target="register">
+                    <a>Register</a>
+                </li>
+             <li class="scroll-to-link" data-target="content-errors">
+                 <a>Errors</a>
+             </li>
+         </ul>
+     </div>
+ </div>
+ <div class="content-page">
+     <div class="content-code"></div>
+     <div class="content">
+         <div class="overflow-hidden content-section" id="content-get-started">
+             <h1>Get started</h1>
+             <pre>
+     API Endpoint
+ 
+         http://api-v3.safe-courier.ml
+                 </pre>
+             <p>
+                 The safe-courier API is a RESTful API that allows you to access the data of the safe-courier.
+             </p>
+         </div>
+         <div class="overflow-hidden content-section" id="authentication">
+             <h2>Authentication</h2>
+             <pre><code class="bash">
+ # Here is a curl example
+ curl \
+ -X POST http://api-v3.safe-courier.ml/api/v1/auth/login \
+    -H 'Content-Type: application/json' \
+    -d '{"email": "test@example.com", "password": "password"}'
+
+                 </code></pre>
+             <p>
+                 To login, you need to make a POST call to the following url :<br>
+                 <code class="higlighted break-word">http://api-v3.safe-courier.ml/api/v1/auth/login</code>
+             </p>
+             <br>
+             <pre><code class="json">
+ Result example :
+ {
+    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NDc3MDQ1NjgsIm5iZiI6MTY0NzcwNDU2OCwianRpIjoiYmExZjJmNTItNDE5YS00OGJhLTliZTUtMWZlYjY1N2I2MmFmIiwiZXhwIjoxNjQ3NzkwOTY4LCJpZGVudGl0eSI6eyJpZCI6Miwicm9sZSI6Mn0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyIsInVzZXJfY2xhaW1zIjp7ImlkIjoyLCJyb2xlIjoyfX0.1iXfUXF6bWAMpbMifIsMRQG2QZ4vBaszOE4Mf90Z7ek",
+    "refresh_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NDc3MDQ1NjgsIm5iZiI6MTY0NzcwNDU2OCwianRpIjoiNjFiMmE5OTQtNzVkYS00YTVlLWFkMjMtNWE1YjFkZDdhODNhIiwiZXhwIjoxNjUwMjk2NTY4LCJpZGVudGl0eSI6eyJpZCI6Miwicm9sZSI6Mn0sInR5cGUiOiJyZWZyZXNoIn0.cD5-SjFIpvEarvcWAbQa3yTHyHUu5DjLpU9dCXLvDzo",
+    "user": {
+      "id": 2,
+      "email": "user@safe-courier.ml",
+      "role": 2
+    }
+  }
+  
+                </code></pre>
+            
+         </div>
+            <div class="overflow-hidden content-section" id="register">
+                <h2>Register</h2>
+                <pre><code class="bash">
+    # Here is a curl example
+    curl \
+    -X POST http://api-v3.safe-courier.ml/api/v1/auth/register \
+    -H 'Content-Type: application/json' \
+    -d '{"email": "test@example.com", "first_name": "John", \
+    "last_name": "Doe", "password": "password", "phone": "123456789",\
+     "address": "123 Main St", "username": "John Doe"}'
+
+                </code></pre>
+                <p>
+                    To register, you need to make a POST call to the following url :<br>
+                    <code class="higlighted break-word">http://api-v3.safe-courier.ml/api/v1/auth/register</code>
+                </p>
+                <br>
+                <pre><code class="json">
+    Result example :
+    {
+        'message': 'User created successfully'
+    }
+                </code></pre>
+            </div>
+         <div class="overflow-hidden content-section" id="content-errors">
+             <h2>Errors</h2>
+             <p>
+                 The Westeros API uses the following error codes:
+             </p>
+             <table>
+                 <thead>
+                 <tr>
+                     <th>Error Code</th>
+                     <th>Meaning</th>
+                 </tr>
+                 </thead>
+                 <tbody>
+                 <tr>
+                     <td>400</td>
+                     <td>
+                            Bad Request. The request is invalid.
+                     </td>
+                 </tr>
+                 <tr>
+                     <td>401</td>
+                     <td>
+                            Unauthorized. The user is not authorized to access the resource.
+                     </td>
+                 </tr>
+                 <tr>
+                     <td>403</td>
+                     <td>
+                            Forbidden. The user is not authorized to access the resource.
+                     </td>
+                 </tr>
+                 <tr>
+                     <td>500</td>
+                     <td>
+                            Internal Server Error. The server encountered an unexpected condition which prevented it from fulfilling the request.
+                     </td>
+                 </tr>
+                 </tbody>
+             </table>
+         </div>
+     </div>
+     <div class="content-code"></div>
+ </div>
+ <script src="https://ticlekiwi.github.io/API-Documentation-HTML-Template/js/script.js"></script>
+ </body>
+ </html>

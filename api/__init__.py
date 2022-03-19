@@ -35,7 +35,7 @@ if env_config['testing'] or env_config['development']:
     logging.basicConfig(filename='app.log', level=logging.DEBUG, format='%(asctime)s  %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
 
 def create_app(config_name=os.getenv('FLASK_ENV')):
-    app = Flask(__name__)
+    app = Flask(__name__, template_folder='templates')
     app.config.from_object(env_config[config_name])
     db.init_app(app)
     migrate.init_app(app, db)
@@ -69,8 +69,10 @@ from .auth import auth_routes
 from .parcels import parcel_routes
 from .users import users_route
 from .admin import admin_routes
+from .docs import docs_route
 
 auth_routes(api)
 parcel_routes(api)
 users_route(api)
 admin_routes(api)
+docs_route(api)
