@@ -1,6 +1,5 @@
 import unittest
 from app import app, db
-import os
 
 
 class BaseCase(unittest.TestCase):
