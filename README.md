@@ -42,5 +42,19 @@ $ python -m unittest discover
 | /api/v1/admin/parcels | Get all parcels (admin only) | GET | 200 | [{...}, {...}, {...}]
 
 
+### API Documentation
+[API Documentation](http://api-v3.safe-courier.ml/docs)
+
+
+### Author
+[Kallyas](https://github.com/kallyas)
+
+
+### License
+[MIT](./LIcense)
+
+### Contributing
+To contribute to this project, please fork the repository and make a pull request.
+
 
 
