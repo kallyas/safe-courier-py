@@ -30,8 +30,8 @@ api = Api()
 jwt = JWTManager()
 cors = CORS()
 
-# enable logging only if environment is testing or development
-if env_config['testing'] or env_config['development']:
+# enable logging only if environment is development
+if os.getenv('FLASK_ENV') == 'development':
     logging.basicConfig(filename='app.log', level=logging.DEBUG, format='%(asctime)s  %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
 
 def create_app(config_name=os.getenv('FLASK_ENV')):
