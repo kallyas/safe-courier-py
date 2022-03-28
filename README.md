@@ -1,5 +1,7 @@
 # safe-courier-py
 safe courier api Python version (Flask Restful)
+[NodeJs Version](https://github.com/kallyas/safe-courier)
+[Laravel Version](https://github.com/kallyas/safe-courier-php)
 
 
 ### Usage

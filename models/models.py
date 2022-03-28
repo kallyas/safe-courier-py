@@ -57,13 +57,14 @@ class User(db.Model):
         db.session.add(self)
         db.session.commit()
 
+    @classmethod
+    def update(cls):
+        db.session.commit()
+
     def delete_from_db(self):
         db.session.delete(self)
         db.session.commit()
 
-    @classmethod
-    def update(cls):
-        db.session.commit()
 
     @classmethod
     def find_by_email(cls, email):
