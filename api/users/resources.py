@@ -2,7 +2,7 @@ from models import User
 from flask import jsonify, request
 from flask_restful import Resource, reqparse
 from flask_jwt_extended import (
-    jwt_required
+    jwt_required, get_jwt_claims,
 )
 from api.utils.schemas import UserSchema
 
@@ -10,7 +10,7 @@ user_schema = UserSchema()
 user_schema_many = UserSchema(many=True)
 
 
-class Users(Resource):
+class UsersResource(Resource):
 
     @jwt_required
     def get(self, id=None):
@@ -23,20 +23,25 @@ class Users(Resource):
         return user_schema_many.dump(users)
 
     @jwt_required
-    def put(self):
+    def put(self, user_id):
         parser = reqparse.RequestParser()
         parser.add_argument('username', type=str, required=True)
-        parser.add_argument('email', type=str, required=True)
+        parser.add_argument('email', type=str, required=False)
         data = parser.parse_args()
 
-        user = User.query.filter_by(username=data['username']).first()
+        if not user_id == get_jwt_claims()['id']:
+            return {"message": "You are not allowed to update this user"}, 403
+
+        user = User.query.filter_by(id=user_id).first()
         if not user:
             return {'message': 'User not found'}, 404
 
-        user = User(**data)
+        print(user.username)
+        user.username = data['username']
+        user.email = data['email']
         user.update()
 
-        return {'message': 'User {} updated successfully'.format(data['username'])}
+        return {'message': 'User updated'}, 200
 
     @jwt_required
     def delete(self, id):

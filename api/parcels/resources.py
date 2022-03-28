@@ -50,12 +50,12 @@ class Parcels(Resource):
     @jwt_required
     def get(self, parcel_id=None, user_id=None):
         if parcel_id:
-            parcel = Parcel.query.filter_by(id=parcel_id).first()
+            parcel = Parcel.query.filter_by(id=parcel_id).filter_by(user_id=get_jwt_claims()['id']).first()
             if parcel:
                 return parcel_schema.dump(parcel)
             return {'message': 'Parcel not found'}, 404
         elif user_id:
-            parcels = Parcel.query.filter_by(user_id=user_id).all()
+            parcels = Parcel.query.filter_by(user_id=user_id).filter_by(user_id=get_jwt_claims()['id']).all()
             if parcels:
                 return parcels_schema.dump(parcels)
             return {'message': 'Parcels by user not found'}, 404
@@ -67,23 +67,34 @@ class Parcels(Resource):
             }
 
     @jwt_required
-    # user can only update their own parcels for the following fields:
-    # name, weight, destination,
-    def put(self):
+    def put(self, parcel_id):
+        self.parser.add_argument('name', type=str)
+        self.parser.add_argument('weight', type=float)
+        self.parser.add_argument('destination', type=str)
+
         data = self.parser.parse_args()
-        parcel = Parcel.query.filter_by(id=data['id']).first()
+
+        if not parcel_id == get_jwt_claims()['id']:
+            return {'message': 'You are not allowed to update this parcel'}, 401
+
+        parcel = Parcel.query.filter_by(id=parcel_id).first()
 
         if not parcel:
             return {'message': 'Parcel not found'}, 404
 
+        if parcel.status == 'delivered':
+            return {'message': 'Parcel already delivered'}, 400
+
         parcel.name = data['name']
         parcel.weight = data['weight']
         parcel.destination = data['destination']
-        parcel.save_to_db()
-        return parcel.json()
+        parcel.update()
+        return {'message': 'Parcel updated successfully'}, 200
 
     @jwt_required
     def delete(self, parcel_id):
+        if not parcel_id == get_jwt_claims()['id']:
+            return {'message': 'You are not allowed to delete this parcel'}, 401
         parcel = Parcel.query.filter_by(id=parcel_id).first()
         if not parcel:
             return {'message': 'Parcel not found'}, 404
