@@ -24,6 +24,8 @@ parcel = {
 
 headers = {'Content-Type': 'application/json'}
 
+expired_token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NDc1MjE0NTksIm5iZiI6MTY0NzUyMTQ1OSwianRpIjoiNDZlNDViYjYtNWQ1Zi00OGE2LTk2ZmYtNjUzMDI4NzE0OWFhIiwiZXhwIjoxNjQ3NjA3ODU5LCJpZGVudGl0eSI6eyJpZCI6MSwicm9sZSI6MX0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyIsInVzZXJfY2xhaW1zIjp7ImlkIjoxLCJyb2xlIjoxfX0.4qUyKkfLuBVTR2hkliMSCt5b-nELyYn3SDHMwD-OVlY'
+
 
 class APITests(BaseCase):
     def register_user(self):
@@ -124,9 +126,89 @@ class APITests(BaseCase):
         self.access_token = self.login_user()
         headers['Authorization'] = 'Bearer ' + self.access_token
         response = self.app.\
-            post('/api/v1/parcels',
+            post('/api/v1/parcels/create',
                 data=json.dumps(parcel),
                 headers=headers
             )
         self.assertEqual(response.status_code, 201)
         self.assertIn('Parcel created successfully', str(response.data))
+
+    def test_create_parcel_fail_missing_data(self):
+        self.register_user()
+        self.access_token = self.login_user()
+        headers['Authorization'] = 'Bearer ' + self.access_token
+        response = self.app.\
+            post('/api/v1/parcels/create',
+                data=json.dumps({}),
+                headers=headers
+            )
+        self.assertEqual(response.status_code, 400)
+
+    def test_create_parcel_fail_no_token(self):
+        headers['Authorization'] = ''
+        response = self.app.\
+            post('/api/v1/parcels/create',
+                data=json.dumps(parcel),
+                headers=headers
+            )
+        
+        self.assertEqual(response.status_code, 401)
+        self.assertIn('Missing Authorization Header', str(response.data))
+
+    def test_create_parcel_fail_wrong_token(self):
+        headers['Authorization'] = 'Bearer ' + 'wrong token'
+        response = self.app.\
+            post('/api/v1/parcels/create',
+                data=json.dumps(parcel),
+                headers=headers
+            )
+        self.assertEqual(response.status_code, 422)
+        self.assertIn('Bad Authorization header', str(response.data))
+
+    def test_create_parcel_fail_expired_token(self):
+        headers['Authorization'] = 'Bearer ' + expired_token
+        response = self.app.\
+            post('/api/v1/parcels/create',
+                data=json.dumps(parcel),
+                headers=headers
+            )
+        self.assertEqual(response.status_code, 401)
+        self.assertIn('Token has expired', str(response.data))
+
+    def test_get_all_parcels_success(self):
+        self.register_user()
+        self.access_token = self.login_user()
+        headers['Authorization'] = 'Bearer ' + self.access_token
+        response = self.app.\
+            get('/api/v1/parcels',
+                headers=headers
+            )
+        self.assertEqual(response.status_code, 200)
+        self.assertListEqual(json.loads(response.data)['parcels'], [])
+
+    def test_get_all_parcels_fail_no_token(self):
+        headers['Authorization'] = ''
+        response = self.app.\
+            get('/api/v1/parcels',
+                headers=headers
+            )
+        self.assertEqual(response.status_code, 401)
+        self.assertIn('Missing Authorization Header', str(response.data))
+
+    def test_get_all_parcels_fail_wrong_token(self):
+        headers['Authorization'] = 'Bearer ' + 'wrong token'
+        response = self.app.\
+            get('/api/v1/parcels',
+                headers=headers
+            )
+        self.assertEqual(response.status_code, 422)
+        self.assertIn('Bad Authorization header', str(response.data))
+
+    def test_get_all_parcels_fail_expired_token(self):
+        headers['Authorization'] = 'Bearer ' + expired_token
+        response = self.app.\
+            get('/api/v1/parcels',
+                headers=headers
+            )
+        self.assertEqual(response.status_code, 401)
+        self.assertIn('Token has expired', str(response.data))
