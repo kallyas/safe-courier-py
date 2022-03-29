@@ -126,7 +126,7 @@ class LogoutAccess(Resource):
 
 
 class LogoutRefresh(Resource):
-    @jwt_refresh_token_required
+    @jwt_required(refresh=True)
     def post(self):
         jti = get_raw_jwt()['jti']
         try:
