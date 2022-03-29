@@ -28,7 +28,7 @@ migrate = Migrate()
 ma = Marshmallow()
 api = Api()
 jwt = JWTManager()
-cors = CORS()
+cors = CORS(resources={r"/api/*": {"origins": ["http://localhost:3000", "https://staging.safe-courier.ml"]}})
 
 
 # enable logging only if environment is development
@@ -44,8 +44,6 @@ def create_app(config_name=os.getenv('FLASK_ENV')):
     api.init_app(app)
     jwt.init_app(app)
     cors.init_app(app)
-    # allow cors for localhost
-    cors.add_origins('http://localhost:3000')
     
     from .errors.handlers import errors
     app.register_blueprint(errors)
