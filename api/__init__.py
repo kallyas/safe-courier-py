@@ -30,6 +30,7 @@ api = Api()
 jwt = JWTManager()
 cors = CORS()
 
+
 # enable logging only if environment is development
 if os.getenv('FLASK_ENV') == 'development':
     logging.basicConfig(filename='app.log', level=logging.DEBUG, format='%(asctime)s  %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
@@ -43,6 +44,8 @@ def create_app(config_name=os.getenv('FLASK_ENV')):
     api.init_app(app)
     jwt.init_app(app)
     cors.init_app(app)
+    # allow cors for localhost
+    cors.add_origins('http://localhost:3000')
     
     from .errors.handlers import errors
     app.register_blueprint(errors)

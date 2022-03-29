@@ -28,7 +28,7 @@ class AdminResource(Resource):
             parcel.status = data['status']
             parcel.current_location = data['current_location']
             parcel.update()
-            return parcel_schema.dump(parcel), 200
+            return {'message': 'Parcel updated successfully'}, 200
         return {'message': 'Parcel not found'}, 404
 
     @jwt_required
