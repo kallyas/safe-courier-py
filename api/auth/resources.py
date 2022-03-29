@@ -4,7 +4,7 @@ from models import User, RevokedToken
 from flask_jwt_extended import (
     jwt_required, create_access_token,
     get_jwt_identity, get_raw_jwt, create_refresh_token,
-    get_jwt_claims,
+    get_jwt_claims, jwt_refresh_token_required,
 )
 from flask_restful import Resource, reqparse
 
@@ -126,7 +126,7 @@ class LogoutAccess(Resource):
 
 
 class LogoutRefresh(Resource):
-    @jwt_required
+    @jwt_refresh_token_required
     def post(self):
         jti = get_raw_jwt()['jti']
         try:
