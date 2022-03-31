@@ -28,7 +28,7 @@ migrate = Migrate()
 ma = Marshmallow()
 api = Api()
 jwt = JWTManager()
-cors = CORS(resources={r"/api/*": {"origins": ["http://localhost:3000", "https://staging.safe-courier.ml"]}})
+cors = CORS(resources={r"/api/*": {"origins": "*"}})
 
 
 # enable logging only if environment is development

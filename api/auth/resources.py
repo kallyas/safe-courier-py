@@ -103,7 +103,7 @@ class UserLogin(Resource):
 
 
 class TokenRefresh(Resource):
-    @jwt_required
+    @jwt_refresh_token_required
     def post(self):
         current_user = get_jwt_identity()
         expires = timedelta(days=1)
