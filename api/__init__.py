@@ -43,7 +43,7 @@ def create_app(config_name=os.getenv('FLASK_ENV')):
     ma.init_app(app)
     api.init_app(app)
     jwt.init_app(app)
-    cors.init_app(app)
+    # cors.init_app(app)
     
     from .errors.handlers import errors
     app.register_blueprint(errors)
