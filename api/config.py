@@ -68,6 +68,7 @@ class ProductionConfig(BaseConfig):
     DEBUG = False
     DEBUG_TB_ENABLED = False
     PROPAGATE_EXCEPTIONS = True
+    CORS_HEADERS = 'Content-Type'
 
 """keys: development, testing, production """
 env_config = dict(
