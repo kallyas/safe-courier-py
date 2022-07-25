@@ -1,7 +1,7 @@
 alembic==1.4.2
 aniso8601==9.0.1
 bcrypt
-blinker==1.4
+blinker==1.5
 certifi==2022.6.15
 cffi
 chardet
