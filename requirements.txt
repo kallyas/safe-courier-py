@@ -34,7 +34,7 @@ PyMySQL==1.0.2
 pypi==2.1
 python-dateutil==2.8.2
 python-editor==1.0.4
-python-dotenv==0.19.2
+python-dotenv==0.20.0
 pytz==2020.1
 requests==2.24.0
 schema==0.7.2
