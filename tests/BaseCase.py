@@ -1,12 +1,6 @@
 import unittest
 from app import app, db
 
-
-class BaseCase(unittest.TestCase):
-    import unittest
-from app import app, db
-
-
 class BaseCase(unittest.TestCase):
     def setUp(self):
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sample.db'
