@@ -7,7 +7,7 @@ from flask_migrate import MigrateCommand
 app = create_app()
 
 SWAGGER_URL = '/api/v1/docs'  # URL for exposing Swagger UI (without trailing '/')
-API_URL = 'https://api-v3.safe-courier.ml/v2/swagger.json'
+API_URL = 'http://localhost:5000/v2/swagger.json'
 
 swaggerui_blueprint = get_swaggerui_blueprint(
     SWAGGER_URL,  # Swagger UI static files will be mapped to '{SWAGGER_URL}/dist/'
