@@ -8,7 +8,7 @@ chardet
 click==8.1.3
 contextlib2==21.6.0
 Flask
-Flask-Bcrypt==0.7.1
+Flask-Bcrypt==1.0.1
 Flask-Cors==3.0.10
 Flask-JWT
 Flask-JWT-Extended
