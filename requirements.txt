@@ -28,7 +28,7 @@ Mako==1.2.1
 Markdown==3.4.1
 MarkupSafe
 marshmallow==3.17.0
-marshmallow-sqlalchemy==0.23.1
+marshmallow-sqlalchemy==0.28.1
 passlib==1.7.4
 PyJWT
 PyMySQL==1.0.2
