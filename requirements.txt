@@ -27,7 +27,7 @@ Jinja2>=2.11.3
 Mako==1.2.1
 Markdown==3.4.1
 MarkupSafe
-marshmallow==3.17.0
+marshmallow==3.17.1
 marshmallow-sqlalchemy==0.28.1
 passlib==1.7.4
 PyJWT
