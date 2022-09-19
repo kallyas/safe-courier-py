@@ -2,7 +2,7 @@ alembic==1.8.1
 aniso8601==9.0.1
 bcrypt
 blinker==1.5
-certifi==2022.6.15.1
+certifi==2022.9.14
 cffi
 chardet
 click==8.1.3
