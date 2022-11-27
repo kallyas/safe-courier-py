@@ -41,7 +41,7 @@ passlib==1.7.2
 pluggy==1.0.0
 py==1.11.0
 pycparser==2.21
-PyJWT==1.4.2
+PyJWT==2.4.0
 PyMySQL==1.0.2
 pyparsing==3.0.7
 pypi==2.1
