@@ -2,7 +2,7 @@
 # depends on mysql database
 
 
-FROM python:3.9.0-alpine3.11
+FROM python:3.9-bullseye
 
 
 # create working directory
