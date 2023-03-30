@@ -17,7 +17,7 @@ Flask-JWT==0.3.2
 Flask-JWT-Extended==3.18.0
 Flask-Login==0.5.0
 Flask-Mail==0.9.1
-flask-marshmallow==0.13.0
+flask-marshmallow==0.14.0
 Flask-Migrate==4.0.4
 Flask-RESTful==0.3.8
 Flask-Script==2.0.6
